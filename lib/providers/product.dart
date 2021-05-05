@@ -24,20 +24,20 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavoriteStatus() async {
+  Future<void> toggleFavoriteStatus(String token, String userId) async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite; //it convert into true to false and vice versa.
     notifyListeners(); //notify Listener is used as like setstate
     final url =
-        "https://myshop-db798-default-rtdb.firebaseio.com/products/$id.json";
+        "https://myshop-db798-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$token";
     try {
-      final response = await http.patch(
+      final response = await http.put(
           Uri.parse(
             url,
           ),
-          body: json.encode({
-            "isFavorite": isFavorite,
-          }));
+          body: json.encode(
+            isFavorite,
+          ));
       if (response.statusCode >= 400) {
         _setFavorite(oldStatus);
       }
