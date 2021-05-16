@@ -73,7 +73,7 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProduct([bool filterByUser = false]) async {
     final filterString =
-        filterByUser ? "orderBy='createrIdZ'&equalTo='$userId'" : "";
+        filterByUser ? "orderBy='createrId'&equalTo='$userId'" : "";
     var url =
         "https://myshop-db798-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString";
     try {
